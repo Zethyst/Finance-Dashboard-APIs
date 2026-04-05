@@ -94,7 +94,7 @@ src/
 
 ```bash
 # 1. Clone and install dependencies
-git clone <repo-url>
+git clone Finance-Dashboard-APIs
 cd finance-dashboard
 npm install
 
