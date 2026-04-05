@@ -28,6 +28,7 @@ A role-based RESTful backend for a finance dashboard system, built with **Node.j
 - Rate limiting, Helmet security headers, NoSQL injection protection
 - Centralized error handling with environment-aware responses
 - Database seeder for quick local testing
+- **Interactive API docs:** [Swagger UI](http://localhost:8000/api/docs) (OpenAPI) — run the server, then open this URL for schemas and “Try it out” requests
 
 ---
 
@@ -144,6 +145,8 @@ Two access-control helpers are used depending on the scenario:
 ---
 
 ## API Reference
+
+For full request/response documentation and to try endpoints in the browser, use **Swagger UI** at [http://localhost:8000/api/docs](http://localhost:8000/api/docs) while the API is running (replace host/port if your `PORT` differs).
 
 All endpoints are prefixed with `/api`. Protected routes require:
 ```

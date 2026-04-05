@@ -4,6 +4,8 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const mongoSanitize = require('express-mongo-sanitize');
 const rateLimit = require('express-rate-limit');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
 
 const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./middleware/errorHandler');
@@ -64,6 +66,8 @@ app.get('/health', (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
+
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // ─── API routes ────────────────────────────────────────────────────────────
 app.use('/api/auth', authRoutes);
