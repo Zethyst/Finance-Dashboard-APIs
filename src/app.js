@@ -18,6 +18,9 @@ const dashboardRoutes = require('./routes/dashboardRoutes');
 
 const app = express();
 
+// Trust X-Forwarded-* from Render / other reverse proxies (correct req.protocol, secure cookies, etc.)
+app.set('trust proxy', 1);
+
 // ─── Security middleware ────────────────────────────────────────────────────
 app.use(helmet());
 app.use(mongoSanitize()); // Prevent NoSQL injection via req.body / query
@@ -64,6 +67,20 @@ app.get('/health', (req, res) => {
     status: 'ok',
     environment: process.env.NODE_ENV,
     timestamp: new Date().toISOString(),
+  });
+});
+
+// ─── Root (avoids 404 when opening the deployed URL in a browser) ─────────
+app.get('/', (req, res) => {
+  const proto = req.get('x-forwarded-proto') || req.protocol;
+  const host = req.get('x-forwarded-host') || req.get('host');
+  const base = `${proto}://${host}`;
+  res.status(200).json({
+    status: 'success',
+    message: 'Finance Dashboard API',
+    documentation: `${base}/api/docs/`,
+    health: `${base}/health`,
+    apiBase: `${base}/api`,
   });
 });
 
